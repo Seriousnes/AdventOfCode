@@ -2,11 +2,11 @@ using AdventOfCode2022.Day.Three;
 using FluentAssertions;
 using Xunit.Abstractions;
 
-namespace AdventOfCode.Execution
+namespace AdventOfCode.Execution._2022
 {
     public class AdventOfCodeExecutionDay3 : AdventOfCodeExecutionBase
     {
-        public AdventOfCodeExecutionDay3(ITestOutputHelper output) : base(output) { }
+        public AdventOfCodeExecutionDay3(ITestOutputHelper output) : base(output, "3") { }
 
         [Theory]
         [InlineData(157, "vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg", "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw")]

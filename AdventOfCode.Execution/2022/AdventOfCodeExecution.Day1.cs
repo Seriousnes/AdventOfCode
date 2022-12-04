@@ -1,10 +1,10 @@
 using AdventOfCode2022.Day.One;
 
-namespace AdventOfCode.Execution
+namespace AdventOfCode.Execution._2022
 {
     public class AdventOfCodeExecutionDay1 : AdventOfCodeExecutionBase
     {
-        public AdventOfCodeExecutionDay1(ITestOutputHelper output) : base(output) { }
+        public AdventOfCodeExecutionDay1(ITestOutputHelper output) : base(output, "1") { }
 
         [Fact]
         public void Day1_1()
@@ -21,7 +21,7 @@ namespace AdventOfCode.Execution
                     elf = null;
                     continue;
                 }
-                
+
                 if (elf is null)
                 {
                     elf = new Elf();

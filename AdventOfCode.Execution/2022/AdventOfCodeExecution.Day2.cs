@@ -2,11 +2,11 @@ using AdventOfCode2022.Day.Two;
 using FluentAssertions;
 using Xunit.Abstractions;
 
-namespace AdventOfCode.Execution
+namespace AdventOfCode.Execution._2022
 {
     public class AdventOfCodeExecutionDay2 : AdventOfCodeExecutionBase
     {
-        public AdventOfCodeExecutionDay2(ITestOutputHelper output) : base(output) { }
+        public AdventOfCodeExecutionDay2(ITestOutputHelper output) : base(output, "2") { }
 
         [Theory]
         [InlineData(Play.Rock, Play.Paper, 8)]
