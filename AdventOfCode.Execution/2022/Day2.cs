@@ -4,9 +4,10 @@ using Xunit.Abstractions;
 
 namespace AdventOfCode.Execution._2022
 {
+    [AdventOfCode(2022, 2)]
     public class AdventOfCodeExecutionDay2 : AdventOfCodeExecutionBase
     {
-        public AdventOfCodeExecutionDay2(ITestOutputHelper output) : base(output, "2") { }
+        public AdventOfCodeExecutionDay2(ITestOutputHelper output) : base(output) { }
 
         [Theory]
         [InlineData(Play.Rock, Play.Paper, 8)]
