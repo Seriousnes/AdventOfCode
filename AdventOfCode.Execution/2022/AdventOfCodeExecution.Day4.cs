@@ -23,12 +23,10 @@ namespace AdventOfCode.Execution._2022
 2-6,4-8", 4)]
         public void Day4_Validation_2(string input, int expectedOverlaps)
         {
-            var overlaps = 0;
             input.Split(Environment.NewLine)
                 .Select(x => new Pair(x))
-                .ToList()
-                .ForEach(p => { if (p.Overlaps()) overlaps++; });
-            overlaps.Should().Be(expectedOverlaps);
+                .Count(x => x.Overlaps())
+                .Should().Be(expectedOverlaps);
         }
 
         [Fact]
