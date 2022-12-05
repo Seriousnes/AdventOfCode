@@ -1,0 +1,1 @@
+﻿namespace AdventOfCode2022.Day.Eight;

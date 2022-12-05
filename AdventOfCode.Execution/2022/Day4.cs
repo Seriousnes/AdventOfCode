@@ -31,12 +31,12 @@ public class Day4 : AdventOfCodeExecutionBase
     [Fact]
     public async void Part1_Execution()
     {
-        await GetResult(lines => lines.Select(p => new Pair(p)).Count(x => x.FullyContains()));
+        await Solve(lines => lines.Select(p => new Pair(p)).Count(x => x.FullyContains()));
     }
 
     [Fact]
     public async void Part2_Execution()
     {
-        await GetResult(lines => lines.Select(p => new Pair(p)).Count(x => x.Overlaps()));
+        await Solve(lines => lines.Select(p => new Pair(p)).Count(x => x.Overlaps()));
     }
 }

@@ -1,11 +1,11 @@
-﻿//using AdventOfCode2022.Day.X;
+﻿//using AdventOfCode2022.Day.Six;
 
 namespace AdventOfCode.Execution._2022;
 
 [AdventOfCode(2022, 0)]
-public class DayX : AdventOfCodeExecutionBase
+public class Day6 : AdventOfCodeExecutionBase
 {
-    public DayX(ITestOutputHelper output) : base(output)
+    public Day6(ITestOutputHelper output) : base(output)
     {
     }
 

@@ -1,11 +1,11 @@
 ﻿//using AdventOfCode2022.Day.X;
 
-namespace AdventOfCode.Execution._2022;
+namespace AdventOfCode.Execution._2021;
 
-[AdventOfCode(2022, 0)]
-public class DayX : AdventOfCodeExecutionBase
+[AdventOfCode(2021, 3)]
+public class Day3 : AdventOfCodeExecutionBase
 {
-    public DayX(ITestOutputHelper output) : base(output)
+    public Day3(ITestOutputHelper output) : base(output)
     {
     }
 
@@ -24,7 +24,7 @@ public class DayX : AdventOfCodeExecutionBase
     [Fact]
     public async void Part1_Execution()
     {
-        await Solve<object>((lines) =>
+        await Solve((lines) =>
         {
             return default(object);
         });

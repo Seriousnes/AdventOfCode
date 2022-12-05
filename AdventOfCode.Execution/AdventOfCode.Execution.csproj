@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AdventOfCode.API\AdventOfCode.API.csproj" />
     <ProjectReference Include="..\AdventOfCode2022\AdventOfCode2022.csproj" />
   </ItemGroup>
 
