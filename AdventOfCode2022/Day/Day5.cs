@@ -32,17 +32,12 @@ public class CargoShip
 
     public void ProcessInstructionFILO(Instruction instruction)
     {
-        try
-        {
-            (var source, var dest) = (this[instruction.FromIndex - 1], this[instruction.ToIndex - 1]);
-            var moving = source.Take(instruction.Count);
-            Crates[instruction.FromIndex - 1] = new CrateStack(source.Skip(instruction.Count).Reverse());
-            moving.Reverse().ToList().ForEach(dest.Push);
-        }
-        catch (Exception e)
-        {            
-            throw new Exception($"Invalid instruction {instruction}", e);
-        }
+        (var source, var dest) = (this[instruction.FromIndex - 1], this[instruction.ToIndex - 1]);
+        var intermediateList = new CrateStack();
+        for (int i = 1; i <= instruction.Count; i++)
+            intermediateList.Push(source.Pop());
+        for (int i = 1; i <= instruction.Count; i++)
+            dest.Push(intermediateList.Pop());
     }
 
     public string GetMessage()
