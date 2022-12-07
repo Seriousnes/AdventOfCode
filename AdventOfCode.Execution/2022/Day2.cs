@@ -4,7 +4,6 @@ using Xunit.Abstractions;
 
 namespace AdventOfCode.Execution._2022
 {
-    [AdventOfCode(2022, 2)]
     public class AdventOfCodeExecutionDay2 : AdventOfCodeExecutionBase
     {
         public AdventOfCodeExecutionDay2(ITestOutputHelper output) : base(output) { }
@@ -39,7 +38,7 @@ namespace AdventOfCode.Execution._2022
             while ((line = sr.ReadLine()) != null)
             {
                 var lineParts = line.Split(' ');
-                var round = new Round { Opponent = Day2.PlayFromString(lineParts[0]), Picking = Day2.PlayFromString(lineParts[1]) };
+                var round = new Round { Opponent = AdventOfCode2022.Day.Two.Day2.PlayFromString(lineParts[0]), Picking = AdventOfCode2022.Day.Two.Day2.PlayFromString(lineParts[1]) };
                 score += round.Points();
             }
 
@@ -56,7 +55,7 @@ namespace AdventOfCode.Execution._2022
             while ((line = sr.ReadLine()) != null)
             {
                 var lineParts = line.Split(' ');
-                var round = new Round_v2 { Opponent = Day2.PlayFromString(lineParts[0]), ExpectedResult = Day2.ResultFromString(lineParts[1]) };
+                var round = new Round_v2 { Opponent = AdventOfCode2022.Day.Two.Day2.PlayFromString(lineParts[0]), ExpectedResult = AdventOfCode2022.Day.Two.Day2.ResultFromString(lineParts[1]) };
                 score += round.Points();
             }
 

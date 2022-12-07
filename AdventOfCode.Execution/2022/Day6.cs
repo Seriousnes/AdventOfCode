@@ -1,8 +1,7 @@
-﻿//using AdventOfCode2022.Day.Six;
+﻿using AdventOfCode2022.Day.Six;
 
 namespace AdventOfCode.Execution._2022;
 
-[AdventOfCode(2022, 0)]
 public class Day6 : AdventOfCodeExecutionBase
 {
     public Day6(ITestOutputHelper output) : base(output)
@@ -10,9 +9,11 @@ public class Day6 : AdventOfCodeExecutionBase
     }
 
     [Theory]
-    [InlineData(@"", null)]
-    public void Part1_Validation(string input, object expectedValue)
+    [InlineData(@"mjqjpqmgbljsphdztnvjfqwrcgsmlb", 7)]
+    public void Part1_Validation(string input, int expectedValue)
     {
+        var dataStream = new Subroutine { DataStreamBuffer = input };
+        dataStream.GetStartMarker(4).Should().Be(expectedValue);
     }
 
     [Theory]
@@ -26,7 +27,8 @@ public class Day6 : AdventOfCodeExecutionBase
     {
         await Solve<object>((lines) =>
         {
-            return default(object);
+            var s = new Subroutine { DataStreamBuffer = lines[0] };
+            return s.GetStartMarker(4);
         });
     }
 
@@ -35,7 +37,8 @@ public class Day6 : AdventOfCodeExecutionBase
     {
         await Solve<object>((lines) =>
         {
-            return default(object);
+            var s = new Subroutine { DataStreamBuffer = lines[0] };
+            return s.GetStartMarker(14);
         });
     }
 }

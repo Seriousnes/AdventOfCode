@@ -2,7 +2,6 @@
 
 namespace AdventOfCode.Execution._2021;
 
-[AdventOfCode(2021, 3)]
 public class Day3 : AdventOfCodeExecutionBase
 {
     public Day3(ITestOutputHelper output) : base(output)

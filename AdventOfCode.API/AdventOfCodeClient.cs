@@ -14,7 +14,7 @@ public class AdventOfCodeClient
     /// <param name="year">Event year</param>
     /// <param name="day">Event Day</param>
     /// <returns></returns>
-    public void Input(int year, int day)
+    public void Input(string year, string day)
     {
         var message = new HttpRequestMessage
         {

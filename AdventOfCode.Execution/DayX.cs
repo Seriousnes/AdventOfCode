@@ -1,8 +1,7 @@
 ﻿//using AdventOfCode2022.Day.X;
 
-namespace AdventOfCode.Execution._2022;
+namespace AdventOfCode.Execution;
 
-[AdventOfCode(2022, 0)]
 public class DayX : AdventOfCodeExecutionBase
 {
     public DayX(ITestOutputHelper output) : base(output)
@@ -11,14 +10,14 @@ public class DayX : AdventOfCodeExecutionBase
 
     [Theory]
     [InlineData(@"", null)]
-    public void Part1_Validation(string input, object expectedValue)
+    public void Part1_Validation(string input, int expectedValue)
     {
     }
 
     [Theory]
     [InlineData(@"", null)]
-    public void Part2_Validation(string input, object expectedValue)
-    {        
+    public void Part2_Validation(string input, int expectedValue)
+    {
     }
 
     [Fact]
@@ -26,7 +25,7 @@ public class DayX : AdventOfCodeExecutionBase
     {
         await Solve<object>((lines) =>
         {
-            return default(object);
+            return default;
         });
     }
 
@@ -35,7 +34,7 @@ public class DayX : AdventOfCodeExecutionBase
     {
         await Solve<object>((lines) =>
         {
-            return default(object);
+            return default;
         });
     }
 }

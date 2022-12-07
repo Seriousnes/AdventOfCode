@@ -1,5 +1,6 @@
 using AdventOfCode.API;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Execution.Framework;
 
@@ -8,17 +9,22 @@ public class AdventOfCodeExecutionBase
     internal readonly ITestOutputHelper output;
     internal readonly string inputFileName;
     private readonly AdventOfCodeClient client = new() { BaseDirectory = @$"..\..\..\Inputs" };
+    private readonly Regex _eventMatch = new(@".*?_(?<year>\d{4})\.day(?<day>\d{1,2})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
     public AdventOfCodeExecutionBase(ITestOutputHelper output)
     {
         this.output = output;
 
-        var aoc = GetType().GetCustomAttribute<AdventOfCodeAttribute>();
-        inputFileName = @$"..\..\..\Inputs\{aoc.Year}\{aoc.Day}.txt";
-
-        if (!File.Exists(inputFileName) && aoc is { })
+        var m = _eventMatch.Match(GetType().FullName);
+        var (year, day) = (m.Groups["year"].Value, m.Groups["day"].Value);
+        if (!string.IsNullOrWhiteSpace(year) && !string.IsNullOrWhiteSpace(day))
         {
-            client.Input(aoc.Year, aoc.Day);
+            inputFileName = @$"..\..\..\Inputs\{year}\{day}.txt";
+
+            if (!File.Exists(inputFileName))
+            {
+                client.Input(year, day);
+            }
         }
     }
     

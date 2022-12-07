@@ -2,7 +2,6 @@ using AdventOfCode2022.Day.One;
 
 namespace AdventOfCode.Execution._2022
 {
-    [AdventOfCode(2022, 1)]
     public class AdventOfCodeExecutionDay1 : AdventOfCodeExecutionBase
     {
         public AdventOfCodeExecutionDay1(ITestOutputHelper output) : base(output) { }

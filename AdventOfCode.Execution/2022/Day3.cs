@@ -4,7 +4,6 @@ using Xunit.Abstractions;
 
 namespace AdventOfCode.Execution._2022
 {
-    [AdventOfCode(2022, 3)]
     public class AdventOfCodeExecutionDay3 : AdventOfCodeExecutionBase
     {
         public AdventOfCodeExecutionDay3(ITestOutputHelper output) : base(output) { }

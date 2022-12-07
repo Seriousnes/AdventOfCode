@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Execution._2022;
 
-[AdventOfCode(2022, 5)]
 public class Day5 : AdventOfCodeExecutionBase
 {
     public Day5(ITestOutputHelper output) : base(output)
