@@ -1,4 +1,5 @@
 using AdventOfCode.API;
+using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 
@@ -32,8 +33,14 @@ public class AdventOfCodeExecutionBase
 
     public async Task Solve<T>(Func<string[], T> action)
     {
+        var stopwatch = new Stopwatch();
+
+        stopwatch.Start();
         var result = action(await GetInputAsync());
-        output.WriteLine($"{result}");
+        stopwatch.Stop();
+
+        output.WriteLine($"Duration: {TimeSpan.FromTicks(stopwatch.ElapsedTicks).TotalMilliseconds,8:F3} ms");
+        output.WriteLine($"Answer: {result,13}");
     }
 
     public async Task SolveAsync<T>(Func<string[], Task<T>> asyncAction)
