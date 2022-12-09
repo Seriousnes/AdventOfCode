@@ -1,5 +1,4 @@
 ﻿namespace AdventOfCode2022.Day.Two;
-
 public class Round
 {
     public Play Opponent { get; set; }
@@ -67,8 +66,6 @@ public static class Day2
         "Y" => Result.Draw,
         "Z" => Result.Win
     };
-
-    public static bool In<T>(this T value, params T[] values) => values.Contains(value);
 
     public static Result Beats(this Play play, Play vs)
     {
