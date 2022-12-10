@@ -1,10 +1,4 @@
-﻿//using AdventOfCode2022.Day.Nine;
-
-using AdventOfCode2022.Day.Two;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-
-namespace AdventOfCode.Execution._2022;
+﻿namespace AdventOfCode.Execution._2022;
 
 public class Day9 : AdventOfCodeExecutionBase
 {

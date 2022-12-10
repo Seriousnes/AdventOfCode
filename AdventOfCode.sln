@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode2022", "AdventOfCode2022\AdventOfCode2022.csproj", "{8821114B-2C01-4FE5-92D1-229595726C66}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.Execution", "AdventOfCode.Execution\AdventOfCode.Execution.csproj", "{6D8DB73C-03BF-4430-9ABD-EB7BACF66D67}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode.API", "AdventOfCode.API\AdventOfCode.API.csproj", "{4948261E-C2FA-4E21-BA8B-1E3BB43B20C0}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8821114B-2C01-4FE5-92D1-229595726C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8821114B-2C01-4FE5-92D1-229595726C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8821114B-2C01-4FE5-92D1-229595726C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8821114B-2C01-4FE5-92D1-229595726C66}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D8DB73C-03BF-4430-9ABD-EB7BACF66D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D8DB73C-03BF-4430-9ABD-EB7BACF66D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D8DB73C-03BF-4430-9ABD-EB7BACF66D67}.Release|Any CPU.ActiveCfg = Release|Any CPU

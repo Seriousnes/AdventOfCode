@@ -1,10 +1,10 @@
-using AdventOfCode2022.Day.One;
+using System.Diagnostics;
 
 namespace AdventOfCode.Execution._2022
 {
-    public class AdventOfCodeExecutionDay1 : AdventOfCodeExecutionBase
+    public class Day1 : AdventOfCodeExecutionBase
     {
-        public AdventOfCodeExecutionDay1(ITestOutputHelper output) : base(output) { }
+        public Day1(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public void Day1_1()
@@ -35,4 +35,11 @@ namespace AdventOfCode.Execution._2022
             output.WriteLine($"Q2 = {elves.OrderByDescending(x => x.Calories).Take(3).Sum(x => x.Calories)}");
         }
     }
+}
+
+[DebuggerDisplay("{Calories} from {Food.Count} food items")]
+public class Elf
+{
+    public List<int> Food { get; set; } = new();
+    public int Calories => Food.Sum();
 }
