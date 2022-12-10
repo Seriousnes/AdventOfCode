@@ -1,1 +1,0 @@
-﻿namespace AdventOfCode2022.Day.X;
