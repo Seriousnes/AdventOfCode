@@ -36,7 +36,7 @@ public class Day2 : AdventOfCodeExecutionBase
                 var round = new Round { Opponent = RockPaperScissors.PlayFromString(lineParts[0]), Picking = RockPaperScissors.PlayFromString(lineParts[1]) };
                 score += round.Points();
             }
-            return score;            
+            return score;
         });
     }
 
