@@ -1,6 +1,4 @@
-﻿//using AdventOfCode2022.Day.X;
-
-namespace AdventOfCode.Execution;
+﻿namespace AdventOfCode.Execution;
 
 public class DayX : AdventOfCodeExecutionBase
 {
