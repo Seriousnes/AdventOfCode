@@ -350,7 +350,7 @@ noop", @"##..##..##..##..##..##..##..##..##..##..
             bool isDrawing = horizontalPosition >= sprite.Start.Value && horizontalPosition <= sprite.End.Value;
 
             sb.Append(isDrawing ? "#" : " ");
-            if (i > 0 && i % 40 == 0)
+            if (i > 0 && (i + 1) % 40 == 0)
             {
                 sb.Append(Environment.NewLine);
             }
