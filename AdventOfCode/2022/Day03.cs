@@ -6,7 +6,7 @@ public class Day3 : AdventOfCodeExecutionBase
 
     [Theory]
     [InlineData(157, "vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg", "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw")]
-    public void Day3_Validation_1(int expectedSum, params string[] rucksacks)
+    public void Part1_Validation(int expectedSum, params string[] rucksacks)
     {
         rucksacks.ToList()
             .Select(Rucksack.GetDuplicates)
@@ -18,7 +18,7 @@ public class Day3 : AdventOfCodeExecutionBase
     [Theory]
     [InlineData('r', 18, "vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg")]
     [InlineData('Z', 52, "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw")]
-    public void Day3_Validation_2(char Badge, int Priority, params string[] rucksacks)
+    public void Part2_Validation(char Badge, int Priority, params string[] rucksacks)
     {
         var badge = Rucksack.GetGroupIdentifier(rucksacks);
         var sum = Rucksack.GetPriority(new[] { badge });
@@ -28,41 +28,37 @@ public class Day3 : AdventOfCodeExecutionBase
     }
 
     [Fact]
-    public void Day_3_1()
+    public async void Part1_Execution()
     {
-        using var sr = new StreamReader(@"..\..\..\Inputs\2022\day3input1.txt");
-        string line;
-
-        int sum = 0;
-        while ((line = sr.ReadLine()) != null)
+        await Solve((lines) =>
         {
-            sum += Rucksack.CalculatePriority(line);
-        }
-
-        output.WriteLine($"{sum}");
+            int sum = 0;
+            foreach (var line in lines)
+                sum += Rucksack.CalculatePriority(line);
+            return sum;
+        });
     }
 
     [Fact]
-    public void Day_3_2()
+    public async void Part2_Execution()
     {
-        using var sr = new StreamReader(@"..\..\..\Inputs\2022\day3input1.txt");
-        string line;
-
-        var groups = new List<char>();
-        var currentGroup = new List<string>();
-        while ((line = sr.ReadLine()) != null)
+        await Solve((lines) =>
         {
-            currentGroup ??= new List<string>();
-            currentGroup.Add(line);
-
-            if (currentGroup.Count == 3)
+            var groups = new List<char>();
+            var currentGroup = new List<string>();
+            foreach (var line in lines)
             {
-                groups.Add(Rucksack.GetGroupIdentifier(currentGroup));
-                currentGroup = null;
-            }
-        }
+                currentGroup ??= new List<string>();
+                currentGroup.Add(line);
 
-        output.WriteLine($"{groups.Select(x => Rucksack.GetPriority(new[] { x })).Sum()}");
+                if (currentGroup.Count == 3)
+                {
+                    groups.Add(Rucksack.GetGroupIdentifier(currentGroup));
+                    currentGroup = null;
+                }
+            }
+            return groups.Select(x => Rucksack.GetPriority(new[] { x })).Sum();
+        });
     }
 }
 

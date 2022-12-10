@@ -7,32 +7,61 @@ namespace AdventOfCode.Execution._2022
         public Day1(ITestOutputHelper output) : base(output) { }
 
         [Fact]
-        public void Day1_1()
+        public async Task Part1_Execution()
         {
-            using var sr = new StreamReader(@"..\..\..\Inputs\2022\day1input1.txt");
-            string line;
-
-            var elves = new List<Elf>();
-            Elf elf = null;
-            while ((line = sr.ReadLine()) != null)
+            await Solve((lines) =>
             {
-                if (string.IsNullOrWhiteSpace(line))
+                var elves = new List<Elf>();
+                Elf elf = null;
+                foreach (var line in lines)
                 {
-                    elf = null;
-                    continue;
+
+                    if (string.IsNullOrWhiteSpace(line))
+                    {
+                        elf = null;
+                        continue;
+                    }
+
+                    if (elf is null)
+                    {
+                        elf = new Elf();
+                        elves.Add(elf);
+                    }
+
+                    elf.Food.Add(int.Parse(line));
                 }
 
-                if (elf is null)
+                return elves.Max(x => x.Calories);
+            });
+        }
+
+        [Fact]
+        public async Task Part2_Execution()
+        {
+            await Solve((lines) =>
+            {
+                var elves = new List<Elf>();
+                Elf elf = null;
+                foreach (var line in lines)
                 {
-                    elf = new Elf();
-                    elves.Add(elf);
+
+                    if (string.IsNullOrWhiteSpace(line))
+                    {
+                        elf = null;
+                        continue;
+                    }
+
+                    if (elf is null)
+                    {
+                        elf = new Elf();
+                        elves.Add(elf);
+                    }
+
+                    elf.Food.Add(int.Parse(line));
                 }
 
-                elf.Food.Add(int.Parse(line));
-            }
-
-            output.WriteLine($"Q1 = {elves.Max(x => x.Calories)}");
-            output.WriteLine($"Q2 = {elves.OrderByDescending(x => x.Calories).Take(3).Sum(x => x.Calories)}");
+                return elves.OrderByDescending(x => x.Calories).Take(3).Sum(x => x.Calories);
+            });
         }
     }
 }

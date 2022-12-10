@@ -25,37 +25,35 @@ public class Day2 : AdventOfCodeExecutionBase
     }
 
     [Fact]
-    public void Day_2_1()
+    public async Task Part1_Execution()
     {
-        using var sr = new StreamReader(@"..\..\..\Inputs\2022\day2input1.txt");
-        string line;
-
-        int score = 0;
-        while ((line = sr.ReadLine()) != null)
+        await Solve((lines) =>
         {
-            var lineParts = line.Split(' ');
-            var round = new Round { Opponent = RockPaperScissors.PlayFromString(lineParts[0]), Picking = RockPaperScissors.PlayFromString(lineParts[1]) };
-            score += round.Points();
-        }
-
-        output.WriteLine($"{score}");
+            int score = 0;
+            foreach (var line in lines)
+            {
+                var lineParts = line.Split(' ');
+                var round = new Round { Opponent = RockPaperScissors.PlayFromString(lineParts[0]), Picking = RockPaperScissors.PlayFromString(lineParts[1]) };
+                score += round.Points();
+            }
+            return score;            
+        });
     }
 
     [Fact]
-    public void Day_2_2()
+    public async Task Part2_Execution()
     {
-        using var sr = new StreamReader(@"..\..\..\Inputs\2022\day2input1.txt");
-        string line;
-
-        int score = 0;
-        while ((line = sr.ReadLine()) != null)
+        await Solve((lines) =>
         {
-            var lineParts = line.Split(' ');
-            var round = new Round_v2 { Opponent = RockPaperScissors.PlayFromString(lineParts[0]), ExpectedResult = RockPaperScissors.ResultFromString(lineParts[1]) };
-            score += round.Points();
-        }
-
-        output.WriteLine($"{score}");
+            int score = 0;
+            foreach (var line in lines)
+            {
+                var lineParts = line.Split(' ');
+                var round = new Round_v2 { Opponent = RockPaperScissors.PlayFromString(lineParts[0]), ExpectedResult = RockPaperScissors.ResultFromString(lineParts[1]) };
+                score += round.Points();
+            }
+            return score;
+        });
     }
 }
 
