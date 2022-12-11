@@ -101,18 +101,8 @@ public class Day05 : AdventOfCodeExecutionBase
             int niceStrings = 0;
             foreach (var line in lines)
             {
-                //if (validator.Validate(line).IsValid) niceStrings++;
-                var result = validator.Validate(line);
-
-                //output.WriteLine($"{line} is {(result.IsValid ? "nice" : "naughty")}");
-                if (!result.IsValid)
-                {
-                    //result.Errors.ForEach(error => output.WriteLine($"  - {error.ErrorMessage}"));
-                }
-                else
-                {
+                if (validator.Validate(line).IsValid)
                     niceStrings++;
-                }
             }
             return niceStrings;
         });
@@ -124,7 +114,7 @@ public class NaughtyOrNiceValidator : AbstractValidator<string>
 {
     public NaughtyOrNiceValidator(IEnumerable<NaughtyOrNiceRule> rules)
     {
-        // three vowels
+        // apply rules
         foreach (var rule in rules)
         {
             RuleFor(x => x)
@@ -133,27 +123,6 @@ public class NaughtyOrNiceValidator : AbstractValidator<string>
         }
     }
 }
-
-//public class NaughtyOrNiceValidator : AbstractValidator<string>
-//{
-//    public NaughtyOrNiceValidator()
-//    {
-//        // three vowels
-//        RuleFor(x => x)
-//            .Must(x => x.Where(c => c.In('a', 'e', 'i', 'o', 'u')).Count() >= 3)
-//            .WithMessage("Must contain 3 or more vowels");
-
-//        // at least one letter that appears twice in a row
-//        RuleFor(x => x)
-//            .Must(x => x.Where((c, i) => (i + 1) < x.Length && c == x[i + 1]).Count() >= 1)
-//            .WithMessage("Must contain at least one letter that appears twice in a row");
-
-//        // doesn't contain 'ab', 'cd', 'pq', or 'xy'
-//        RuleFor(x => x)
-//            .Must(x => new[] { "ab", "cd", "pq", "xy" }.Select(s => !x.Contains(s)).All(x => x))
-//            .WithMessage("Must not contain \"ab\", \"cd\", \"pq\", or \"xy\"");
-//    }
-//}
 
 public class NaughtyOrNiceRule
 {
