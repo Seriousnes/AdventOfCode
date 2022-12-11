@@ -17,8 +17,8 @@ public class AdventOfCodeExecutionBase
         this.output = output;
 
         var m = _eventMatch.Match(GetType().FullName);
-        var (year, day) = (m.Groups["year"].Value, m.Groups["day"].Value);
-        if (!string.IsNullOrWhiteSpace(year) && !string.IsNullOrWhiteSpace(day))
+        var (year, day) = (int.Parse(m.Groups["year"].Value), int.Parse(m.Groups["day"].Value));
+        if (year > 0 && day > 0)
         {
             inputFileName = @$"..\..\..\Inputs\{year}\{day}.txt";
 

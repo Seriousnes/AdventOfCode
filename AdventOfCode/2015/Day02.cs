@@ -4,9 +4,9 @@ using System.Net.Mime;
 
 namespace AdventOfCode.Execution._2015;
 
-public class Day2 : AdventOfCodeExecutionBase
+public class Day02 : AdventOfCodeExecutionBase
 {
-    public Day2(ITestOutputHelper output) : base(output)
+    public Day02(ITestOutputHelper output) : base(output)
     {
     }
 

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace AdventOfCode.Execution._2015;
 
-public class Day4 : AdventOfCodeExecutionBase
+public class Day04 : AdventOfCodeExecutionBase
 {
-    public Day4(ITestOutputHelper output) : base(output)
+    public Day04(ITestOutputHelper output) : base(output)
     {
     }
 

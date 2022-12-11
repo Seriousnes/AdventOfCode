@@ -2,9 +2,9 @@
 
 namespace AdventOfCode.Execution._2015;
 
-public class Day1 : AdventOfCodeExecutionBase
+public class Day01 : AdventOfCodeExecutionBase
 {
-    public Day1(ITestOutputHelper output) : base(output)
+    public Day01(ITestOutputHelper output) : base(output)
     {
     }
 
