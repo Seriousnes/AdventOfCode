@@ -72,13 +72,13 @@ public class Day05 : AdventOfCodeExecutionBase
     }
 
     [Theory]
-    //[InlineData(@"qjhvhtzxzqqjkmpb", true)]
-    //[InlineData(@"xxyxx", true)]
-    //[InlineData(@"uurcxstgmygtbstg", false)]
-    //[InlineData(@"ieodomkazucvgmuy", false)]
+    [InlineData(@"qjhvhtzxzqqjkmpb", true)]
+    [InlineData(@"xxyxx", true)]
+    [InlineData(@"uurcxstgmygtbstg", false)]
+    [InlineData(@"ieodomkazucvgmuy", false)]
     [InlineData(@"aaa", false)]
-    //[InlineData(@"xyxyaoa", true)]
-    //[InlineData(@"abcdefeghicd", true)]
+    [InlineData(@"xyxyaoa", true)]
+    [InlineData(@"abcdefeghicd", true)]
     public void Part2_Validation(string input, bool expectedValue)
     {
         var validator = new NaughtyOrNiceValidator(part2rules);
