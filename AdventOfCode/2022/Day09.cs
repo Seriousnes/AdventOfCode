@@ -63,7 +63,7 @@ U 20", 36)]
 
 
 [DebuggerDisplay("({Column}, {Row})")]
-public class Position
+file class Position
 {
     public required int Column { get; set; }
     public required int Row { get; set; }
@@ -125,7 +125,7 @@ public class Position
 }
 
 [DebuggerDisplay("({Column}, {Row})")]
-public struct UniquePosition
+file struct UniquePosition
 {
     public int Column { get; set; }
     public int Row { get; set; }
@@ -137,7 +137,7 @@ public struct UniquePosition
 }
 
 [DebuggerDisplay("{Head.ToString()}")]
-public class Rope
+file class Rope
 {
     public Rope(int numTails)
     {
@@ -174,7 +174,7 @@ public class Rope
     }
 }
 
-public enum Direction
+file enum Direction
 {
     Up = 'U',
     Down = 'D', 

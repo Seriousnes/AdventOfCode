@@ -95,7 +95,7 @@ public class Day8 : AdventOfCodeExecutionBase
     {
         await Solve<object>((lines) =>
         {
-            var f = GetForest(lines);
+            var f = lines.To2DArray(l => l.ToArray(), c => int.Parse(c.ToString()));
             var maxScore = 0;
 
             for (int y = 0; y < f.GetLength(1); y++)
