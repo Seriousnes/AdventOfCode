@@ -1,12 +1,28 @@
 ﻿using AdventOfCode.Execution._2022;
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 
 namespace AdventOfCode.Execution.Framework;
 
 public static class Extensions
 {
     public static bool In<T>(this T value, params T[] values) => values.Contains(value);
+    public static bool IsBetween<T>(this T value, T low, T high, bool lowerBoundInclusive = true, bool upperBoundInclusive = true) where T : IComparable
+    {
+        return
+            lowerBoundInclusive switch
+            {
+                true => value.CompareTo(low) >= 0,
+                false => value.CompareTo(low) > 0,
+            }
+            &&
+            upperBoundInclusive switch
+            {
+                true => value.CompareTo(high) <= 0,
+                false => value.CompareTo(high) < 0
+            };
+    }
 
     public static TItem[,] To2DArray<TItem, TSelector>(this IEnumerable<string> lines, Func<string, IEnumerable<TSelector>> splitRow, Func<TSelector, TItem> convertToT)
     {
@@ -15,19 +31,16 @@ public static class Extensions
 
     public static TItem[,] To2DArray<TItem, TSelector>(this IEnumerable<string> lines, Func<string, IEnumerable<TSelector>> splitRow, Func<TSelector, int, int, TItem> convertToT)
     {
-        var width = lines.First().Length;
-        var height = lines.Count();
+        var projectedLines = lines.Select(x => splitRow(x).ToList()).ToList();
 
-        var result = new TItem[width, height];
-
-        for (int y = 0; y < height; y++)
+        var result = new TItem[projectedLines.Count, projectedLines.First().Count];
+        Parallel.ForEach(projectedLines, (line, _, x) =>
         {
-            var row = splitRow(lines.ElementAt(y)).ToArray();
-            for (int x = 0; x < row.Length; x++)
+            Parallel.ForEach(line, (item, _, y) =>
             {
-                result[x, y] = convertToT(row[x], x, y);
-            }
-        }
+                result[x, y] = convertToT(item, (int)x, (int)y);
+            });
+        });
 
         return result;
     }

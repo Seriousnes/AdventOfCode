@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using AdventOfCode.Execution.Framework;
+using System.Collections.Concurrent;
+using System.Security.Cryptography;
 
 namespace AdventOfCode.Execution._2022;
 
@@ -16,25 +18,35 @@ acctuvwj
 abdefghi", 31)]
     public async Task Part1_Validation(string input, int expectedValue)
     {
-        var h = new HeightMap(input.ToLines().ToList());
-        var p = await h.Walk(h.Start, new List<GridRef>());
-        h.GetShortestPath(p).Should().Be(expectedValue);
+        var h = new HeightMap(input.ToLines());
+        h.GetShortestPath().Should().Be(expectedValue);
     }
 
     [Theory]
-    [InlineData(@"", null)]
+    [InlineData(@"Sabqponm
+abcryxxl
+accszExk
+acctuvwj
+abdefghi", 29)]
     public void Part2_Validation(string input, int expectedValue)
     {
+        var h = new HeightMap(input.ToLines());
+        var pathDistances = new ConcurrentBag<int>();
+        Parallel.ForEach(h.GetStartingPoints(false), (p) =>
+        {
+            pathDistances.Add(h.GetShortestPath(p));
+        });
+
+        pathDistances.Min().Should().Be(expectedValue);
     }
 
     [Fact]
     public async void Part1_Execution()
     {
-        await SolveAsync<object>(async (lines) =>
+        await Solve<object>((lines) =>
         {
             var h = new HeightMap(lines);
-            var p = await h.Walk(h.Start, new List<GridRef>());
-            return h.GetShortestPath(p);
+            return h.GetShortestPath();
         });
     }
 
@@ -43,100 +55,146 @@ abdefghi", 31)]
     {
         await Solve<object>((lines) =>
         {
-            return default;
+            var h = new HeightMap(lines);
+            var pathDistances = new ConcurrentBag<int>();
+            Parallel.ForEach(h.GetStartingPoints(false), (p) =>
+            {
+                pathDistances.Add(h.GetShortestPath(p));
+            });
+
+            return pathDistances.Min();
         });
     }
 }
 
 public class HeightMap
 {
-    private int[,] _grid;
-
+    private char[,] _grid;
+    
     public HeightMap(IEnumerable<string> lines)
     {
         _grid = lines.To2DArray(l => l.ToArray(), (elevation, x, y) =>
         {
-            if (elevation == 'S')
-                Start = new GridRef(x, y);
             if (elevation == 'E')
-                End = new GridRef(x, y);
+                Goal = new GridRef { X = x, Y = y };
 
-            return elevation switch
+            return elevation;
+        });
+    }
+
+    public int this[int X, int Y] => _grid[X, Y] switch
+    {
+        'S' => 'a',
+        'E' => 'z',
+        var x => x
+    } - 96;
+
+    public int this[GridRef p] => this[p.X, p.Y];
+    public GridRef Goal { get; private set; }
+    public int Width => _grid.GetLength(0);
+    public int Height => _grid.GetLength(1);
+
+    public int GetShortestPath(GridRef start = null)
+    {
+        start ??= GetStartingPoints().First();
+
+        start.SetDistance(Goal);
+
+        var _visitedNodes = new List<GridRef>();
+        var _activeNodes = new List<GridRef>() { start };
+
+        while (_activeNodes.Any())
+        {
+            var check = _activeNodes.OrderBy(x => x.CostDistance).First();
+            if (check.IsAtSamePosition(Goal))
+                return check.Cost;
+
+            _visitedNodes.Add(check);
+            _activeNodes.Remove(check);
+
+            var nextNodes = check.GetPossibleMoves(this);
+            foreach (var next in nextNodes.Where(x => !_visitedNodes.Any(v => v.IsAtSamePosition(x))))
             {
-                'S' => 'a',
-                'E' => 'z',
-                _ => elevation
-            } - 96;
-        });
-    }
-
-    public int this[int X, int Y] => _grid[X, Y];
-    public int this[GridRef p] => _grid[p.X, p.Y];
-    public GridRef Start { get; private set; }
-    public  GridRef End { get; private set; }
-    public int[,] Grid => _grid;
-    public int Width => _grid.GetLength(1);
-    public int Height => _grid.GetLength(0);
-
-    public int GetShortestPath(List<List<GridRef>> paths)
-    {
-        return paths.Where(x => x.Last() == End).OrderBy(x => x.Count).Select(x => x.Count).FirstOrDefault();
-    }
-
-    public async Task<List<List<GridRef>>> Walk(GridRef startingPoint, List<GridRef> path = null)
-    {
-        path ??= new List<GridRef>();
-
-        // from this position, get options and walk those
-        var nextMoves = startingPoint.GetPossibleMoves(this);
-
-        // found the end!!
-        if (nextMoves.Contains(End))
-        {
-            path.Add(End);
-            return new List<List<GridRef>>(new[] { path });
+                if (_activeNodes.Any(x => x.IsAtSamePosition(next)))
+                {
+                    var existing = _activeNodes.First(x => x.IsAtSamePosition(next));
+                    if (existing.CostDistance > check.CostDistance)
+                    {
+                        _activeNodes.Remove(existing);
+                        _activeNodes.Add(next);
+                    }
+                }
+                else
+                {
+                    _activeNodes.Add(next);
+                }
+            }
         }
-        // deadend path
-        else if (nextMoves.Count() == 0)
+
+        return int.MaxValue;
+    }
+
+    public IEnumerable<GridRef> GetStartingPoints(bool useInitial = true)
+    {
+        for (int x = 0; x < Width; x++)
         {
-            new List<List<GridRef>>(new[] { nextMoves.ToList() });
-        }            
-
-        // don't move to an already moved to position
-        nextMoves = nextMoves.Where(x => !path.Contains(x));
-
-        List<List<GridRef>> walkedPaths = new();
-        
-        await Parallel.ForEachAsync(nextMoves, async (m, _) =>
-        {
-            var moveList = new List<GridRef>(path) { m };            
-            var walkResult = await Walk(m, moveList);
-            walkedPaths.AddRange(walkResult.Where(x => x.Count > 0));
-        });
-
-        return walkedPaths;
-    }    
+            for (int y = 0; y < Height; y++)
+            {
+                var height = _grid[x, y];
+                if ((useInitial && height == 'S') || (!useInitial && height.In('S', 'a')))
+                    yield return new GridRef { X = x, Y = y };
+            }
+        }
+    }
 }
 
 [DebuggerDisplay("{X},{Y}")]
-public struct GridRef
+public class GridRef
 {
-    public GridRef(int x, int y)
+    public GridRef() { }
+
+    public GridRef(GridRef current, GridDirection direction, GridRef target)
     {
-        X = x;
-        Y = y;
+        Parent = current;
+
+        X = direction switch
+        {
+            GridDirection.Left => current.X - 1,
+            GridDirection.Right => current.X + 1,
+            _ => current.X
+        };
+
+        Y = direction switch
+        {
+            GridDirection.Up => current.Y - 1,
+            GridDirection.Down => current.Y + 1,
+            _ => current.Y
+        };
+
+        Cost = current.Cost + 1;
+        SetDistance(target);
     }
+
     public int X { get; set; }
     public int Y { get; set; }
+    public int Cost { get; set; }
+    public int Distance { get; set; }
+    public int CostDistance => Cost + Distance;
+    public GridRef Parent { get; set; }
 
-    public static bool operator ==(GridRef lhs, GridRef rhs)
+    public void SetDistance(int x, int y)
     {
-        return lhs.X == rhs.X && lhs.Y == rhs.Y;
+        Distance = Math.Abs(x - X) + Math.Abs(y - Y);
     }
 
-    public static bool operator !=(GridRef lhs, GridRef rhs)
+    internal void SetDistance(GridRef end)
     {
-        return lhs.X != rhs.X || lhs.Y != rhs.Y;
+        SetDistance(end.X, end.Y);
+    }
+
+    public bool IsAtSamePosition(GridRef rhs)
+    {
+        return X == rhs.X && Y == rhs.Y;
     }
 }
 
@@ -152,24 +210,12 @@ public static class Day12Extensions
 {
     public static IEnumerable<GridRef> GetPossibleMoves(this GridRef position, HeightMap grid)
     {
-        GridRef p;
-
-        p = new GridRef(position.X, position.Y - 1);
-        if (p.IsInGrid(grid) && Math.Abs(grid[p] - grid[position]) <= 1)
-            yield return p;
-
-        p = new GridRef(position.X, position.Y + 1);
-        if (p.IsInGrid(grid) && Math.Abs(grid[p] - grid[position]) <= 1)
-            yield return p;
-
-        p = new GridRef(position.X - 1, position.Y);
-        if (p.IsInGrid(grid) && Math.Abs(grid[p] - grid[position]) <= 1)
-            yield return p;
-
-        p = new GridRef(position.X + 1, position.Y);
-        if (p.IsInGrid(grid) && Math.Abs(grid[p] - grid[position]) <= 1)
-            yield return p;
+        return new List<GridRef>(Enum.GetValues<GridDirection>()
+            .Select(x => new GridRef(position, x, grid.Goal)))
+            .Where(x => x.IsInGrid(grid) && grid[x] - grid[position] <= 1);
     }
 
-    public static bool IsInGrid(this GridRef position, HeightMap grid) => position.X < grid.Height && position.Y < grid.Width && position.X >= 0 && position.Y >= 0;
+    public static bool IsInGrid(this GridRef position, HeightMap grid) => 
+        position.X.IsBetween(0, grid.Width, upperBoundInclusive: false) && 
+        position.Y.IsBetween(0, grid.Height, upperBoundInclusive: false);
 }
